@@ -124,6 +124,7 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Actions based on env
 cd /app || exit 10
+[ -f "/app/.venv/bin/source" ] && . "/app/.venv/bin/source"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # begin main app
 case "$1" in
