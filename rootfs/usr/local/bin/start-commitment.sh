@@ -12,8 +12,8 @@
 # @@Description      :  script to start commitment
 # @@Changelog        :  New script
 # @@TODO             :  Better documentation
-# @@Other            :  
-# @@Resource         :  
+# @@Other            :
+# @@Resource         :
 # @@Terminal App     :  no
 # @@sudo/root        :  no
 # @@Template         :  other/start-service
@@ -34,8 +34,7 @@ __certbot() {
 __heath_check() {
   status=0 health="Good"
   __pgrep ${1:-} &>/dev/null || status=$((status + 1))
-  #__curl "http://localhost:$SERVICE_PORT/server-health" || status=$((status + 1))
-  [ "$status" -eq 0 ] || health="Errors reported see docker logs --follow $CONTAINER_NAME"
+  __curl "http://localhost:$SERVICE_PORT/txt" || status=$((status + 1))
   return ${status:-$?}
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,9 +73,9 @@ DEFAULT_TEMPLATE_DIR="${DEFAULT_TEMPLATE_DIR:-/usr/local/share/template-files/de
 CONTAINER_IP_ADDRESS="$(ip a 2>/dev/null | grep 'inet' | grep -v '127.0.0.1' | awk '{print $2}' | sed 's|/.*||g')"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Overwrite variables
-#SERVICE_PORT=""
+#SERVICE_PORT="5000"
 SERVICE_NAME="commitment"
-SERVICE_COMMAND="$SERVICE_NAME"
+SERVICE_COMMAND="python3 /app/commitment.py"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Show start message
@@ -124,7 +123,7 @@ fi
 [ -f "/config/.env.sh" ] && . "/config/.env.sh"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Actions based on env
-
+cd /app || exit 10
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # begin main app
 case "$1" in
