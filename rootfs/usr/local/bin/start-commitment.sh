@@ -75,7 +75,7 @@ CONTAINER_IP_ADDRESS="$(ip a 2>/dev/null | grep 'inet' | grep -v '127.0.0.1' | a
 # Overwrite variables
 #SERVICE_PORT="5000"
 SERVICE_NAME="commitment"
-SERVICE_COMMAND="python3 /app/commitment.py"
+SERVICE_COMMAND="python3 /app/commit.py"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Show start message
