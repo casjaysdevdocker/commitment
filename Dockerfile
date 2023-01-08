@@ -1,4 +1,4 @@
-FROM casjaysdevdocker/python3:latest AS build
+FROM casjaysdevdocker/alpine:latest AS build
 
 ARG ALPINE_VERSION="v3.16"
 
@@ -25,8 +25,7 @@ RUN set -ex; \
   echo "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/community" >>"/etc/apk/repositories"; \
   if [ "${ALPINE_VERSION}" = "edge" ]; then echo "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/testing" >>"/etc/apk/repositories" ; fi ; \
   apk update --update-cache && apk add --no-cache ${PACK_LIST} && \
-  git clone -q https://github.com/casjay-heroku/commitment /app && \
-  cd /app && pip install -r requirements.txt
+  echo
 
 RUN echo 'Running cleanup' ; \
   rm -Rf /usr/share/doc/* /usr/share/info/* /tmp/* /var/tmp/* ; \
@@ -43,15 +42,15 @@ RUN echo 'Running cleanup' ; \
 FROM scratch
 
 ARG \
-  SERVICE_PORT="5000" \
-  EXPOSE_PORTS="5000" \
+  SERVICE_PORT="80" \
+  EXPOSE_PORTS="80" \
   PHP_SERVER="commitment" \
   NODE_VERSION="system" \
   NODE_MANAGER="system" \
   BUILD_VERSION="latest" \
   LICENSE="MIT" \
   IMAGE_NAME="commitment" \
-  BUILD_DATE="Thu Oct 27 05:08:44 PM EDT 2022" \
+  BUILD_DATE="Sun Nov 13 12:16:04 PM EST 2022" \
   TIMEZONE="America/New_York"
 
 LABEL maintainer="CasjaysDev <docker-admin@casjaysdev.com>" \
@@ -86,9 +85,9 @@ ENV LANG=en_US.UTF-8 \
 COPY --from=build /. /
 
 USER root
-WORKDIR /app
+WORKDIR /root
 
-#VOLUME [ "/config","/data" ]
+VOLUME [ "/config","/data" ]
 
 EXPOSE $EXPOSE_PORTS
 
