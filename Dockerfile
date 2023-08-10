@@ -14,7 +14,7 @@ ENV LANG=en_US.UTF-8 \
   SHELL="/bin/sh" \
   TERM="xterm-256color" \
   TIMEZONE="${TZ:-$TIMEZONE}" \
-  HOSTNAME="casjaysdev-commitment"
+  HOSTNAME="casjaysdev.promitment"
 
 COPY ./rootfs/. /
 
@@ -53,7 +53,7 @@ ARG \
   BUILD_DATE="Sun Nov 13 12:16:04 PM EST 2022" \
   TIMEZONE="America/New_York"
 
-LABEL maintainer="CasjaysDev <docker-admin@casjaysdev.com>" \
+LABEL maintainer="CasjaysDev <docker-admin@casjaysdev.pro>" \
   org.opencontainers.image.vendor="CasjaysDev" \
   org.opencontainers.image.authors="CasjaysDev" \
   org.opencontainers.image.vcs-type="Git" \

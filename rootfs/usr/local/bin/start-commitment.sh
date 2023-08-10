@@ -3,7 +3,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ##@Version           :  202210271708-git
 # @@Author           :  Jason Hempstead
-# @@Contact          :  jason@casjaysdev.com
+# @@Contact          :  jason@casjaysdev.pro
 # @@License          :  WTFPL
 # @@ReadME           :  start-commitment.sh --help
 # @@Copyright        :  Copyright: (c) 2022 Jason Hempstead, Casjays Developments
@@ -54,7 +54,7 @@ DOMAINNAME="${DOMAINNAME:-}"
 TZ="${TZ:-America/New_York}"
 SERVICE_PORT="${SERVICE_PORT:-$PORT}"
 SERVICE_NAME="${CONTAINER_NAME:-}"
-HOSTNAME="${HOSTNAME:-casjaysdev-commitment}"
+HOSTNAME="${HOSTNAME:-casjaysdev.promitment}"
 HOSTADMIN="${HOSTADMIN:-root@${DOMAINNAME:-$HOSTNAME}}"
 SSL_CERT_BOT="${SSL_CERT_BOT:-false}"
 SSL_ENABLED="${SSL_ENABLED:-false}"
