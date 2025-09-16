@@ -1,9 +1,9 @@
-name: commitment_temp
+name: commitment
 
 on: push
 
 jobs:
-  release-commitment_temp:
+  release-commitment:
     runs-on: act_runner
     container:
       image: catthehacker/ubuntu:act-latest

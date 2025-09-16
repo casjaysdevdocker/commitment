@@ -1,7 +1,7 @@
-# Docker image for commitment_temp using the alpine template
-ARG IMAGE_NAME="commitment_temp"
-ARG PHP_SERVER="commitment_temp"
-ARG BUILD_DATE="202509060002"
+# Docker image for commitment using the alpine template
+ARG IMAGE_NAME="commitment"
+ARG PHP_SERVER="commitment"
+ARG BUILD_DATE="202509161146"
 ARG LANGUAGE="en_US.UTF-8"
 ARG TIMEZONE="America/New_York"
 ARG WWW_ROOT_DIR="/usr/local/share/httpd/default"
@@ -20,7 +20,7 @@ ARG PHP_VERSION="system"
 ARG NODE_VERSION="system"
 ARG NODE_MANAGER="system"
 
-ARG IMAGE_REPO="casjaysdevdocker/commitment_temp"
+ARG IMAGE_REPO="casjaysdevdocker/commitment"
 ARG IMAGE_VERSION="latest"
 ARG CONTAINER_VERSION=""
 
@@ -54,7 +54,7 @@ ARG PHP_SERVER
 ARG SHELL_OPTS
 ARG PATH
 
-ARG PACK_LIST="git nodejs npm"
+ARG PACK_LIST=" "
 
 ENV ENV=~/.profile
 ENV SHELL="/bin/sh"
@@ -63,7 +63,7 @@ ENV TZ="${TIMEZONE}"
 ENV TIMEZONE="${TZ}"
 ENV LANG="${LANGUAGE}"
 ENV TERM="xterm-256color"
-ENV HOSTNAME="casjaysdevdocker-commitment_temp"
+ENV HOSTNAME="casjaysdevdocker-commitment"
 
 USER ${USER}
 WORKDIR /root
@@ -219,12 +219,12 @@ LABEL org.opencontainers.image.authors="${LICENSE}"
 LABEL org.opencontainers.image.created="${BUILD_DATE}"
 LABEL org.opencontainers.image.version="${BUILD_VERSION}"
 LABEL org.opencontainers.image.schema-version="${BUILD_VERSION}"
-LABEL org.opencontainers.image.url="https://hub.docker.com/r/casjaysdevdocker/commitment_temp"
-LABEL org.opencontainers.image.source="https://hub.docker.com/r/casjaysdevdocker/commitment_temp"
+LABEL org.opencontainers.image.url="docker.io"
+LABEL org.opencontainers.image.source="docker.io"
 LABEL org.opencontainers.image.vcs-type="Git"
 LABEL org.opencontainers.image.revision="${BUILD_VERSION}"
-LABEL org.opencontainers.image.source="https://github.com/casjaysdevdocker/commitment_temp"
-LABEL org.opencontainers.image.documentation="https://github.com/casjaysdevdocker/commitment_temp"
+LABEL org.opencontainers.image.source="https://github.com/casjaysdevdocker/commitment"
+LABEL org.opencontainers.image.documentation="https://github.com/casjaysdevdocker/commitment"
 LABEL com.github.containers.toolbox="false"
 
 ENV ENV=~/.bashrc

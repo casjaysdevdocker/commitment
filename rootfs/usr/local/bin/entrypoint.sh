@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##@Version           :  202509060002-git
+##@Version           :  202509161146-git
 # @@Author           :  Jason Hempstead
 # @@Contact          :  jason@casjaysdev.pro
-# @@License          :  WTFPL
+# @@License          :  LICENSE.md
 # @@ReadME           :  entrypoint.sh --help
 # @@Copyright        :  Copyright: (c) 2025 Jason Hempstead, Casjays Developments
-# @@Created          :  Saturday, Sep 06, 2025 00:02 EDT
+# @@Created          :  Tuesday, Sep 16, 2025 11:46 EDT
 # @@File             :  entrypoint.sh
-# @@Description      :  Entrypoint file for commitment_temp
+# @@Description      :  Entrypoint file for commitment
 # @@Changelog        :  New script
 # @@TODO             :  Better documentation
 # @@Other            :  
@@ -18,7 +18,7 @@
 # @@sudo/root        :  no
 # @@Template         :  other/docker-entrypoint
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# shellcheck disable=SC1003,SC2016,SC2031,SC2120,SC2155,SC2199,SC2317
+# shellcheck disable=SC1001,SC1003,SC2001,SC2003,SC2016,SC2031,SC2120,SC2155,SC2199,SC2317,SC2329
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 set -e
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,7 +34,7 @@ PATH="/usr/local/etc/docker/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Set bash options
 SCRIPT_FILE="$0"
-CONTAINER_NAME="commitment_temp"
+CONTAINER_NAME="commitment"
 SCRIPT_NAME="$(basename -- "$SCRIPT_FILE" 2>/dev/null)"
 CONTAINER_NAME="${ENV_CONTAINER_NAME:-$CONTAINER_NAME}"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -87,8 +87,8 @@ SERVICE_UID="${SERVICE_UID:-0}" # set the user id
 SERVICE_GID="${SERVICE_GID:-0}" # set the group id
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # User and group in which the service switches to - IE: nginx,apache,mysql,postgres
-SERVICE_USER="${SERVICE_USER:-$commitment_temp}"  # execute command as another user
-SERVICE_GROUP="${SERVICE_GROUP:-commitment_temp}" # Set the service group
+SERVICE_USER="${SERVICE_USER:-$commitment}"  # execute command as another user
+SERVICE_GROUP="${SERVICE_GROUP:-commitment}" # Set the service group
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Secondary ports
 SERVER_PORTS="" # specifiy other ports
@@ -259,6 +259,8 @@ if [ -f "$ENTRYPOINT_PID_FILE" ]; then
   touch "$ENTRYPOINT_PID_FILE"
 else
   echo "$$" >"$ENTRYPOINT_PID_FILE"
+  # Clean any stale PID files on first run
+  rm -f /run/init.d/*.pid 2>/dev/null || true
 fi
 if [ -f "$ENTRYPOINT_INIT_FILE" ]; then
   ENTRYPOINT_MESSAGE="no" ENTRYPOINT_FIRST_RUN="no"
@@ -267,7 +269,7 @@ fi
 if [ "$ENTRYPOINT_FIRST_RUN" != "no" ]; then
   # Show start message
   if [ "$CONFIG_DIR_INITIALIZED" = "no" ] || [ "$DATA_DIR_INITIALIZED" = "no" ]; then
-    [ "$ENTRYPOINT_MESSAGE" = "yes" ] && echo "Executing entrypoint script for commitment_temp"
+    [ "$ENTRYPOINT_MESSAGE" = "yes" ] && echo "Executing entrypoint script for commitment"
   fi
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Set reusable variables
@@ -370,8 +372,14 @@ if [ "$ENTRYPOINT_FIRST_RUN" != "no" ]; then
   __setup_mta
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# if no pid assume container restart
-[ -f "$ENTRYPOINT_PID_FILE" ] && [ -f "/run/__start_init_scripts.pid" ] || START_SERVICES="yes"
+# if no pid assume container restart - clean stale files on restart
+if [ ! -f "$ENTRYPOINT_PID_FILE" ]; then
+  START_SERVICES="yes"
+  # Clean stale pid files from previous container runs
+  rm -f /run/__start_init_scripts.pid /run/init.d/*.pid /run/*.pid 2>/dev/null || true
+elif [ ! -f "/run/__start_init_scripts.pid" ]; then
+  START_SERVICES="yes"
+fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [ "$ENTRYPOINT_MESSAGE" = "yes" ] && __printf_space "40" "Container ip address is:" "$CONTAINER_IP4_ADDRESS"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
