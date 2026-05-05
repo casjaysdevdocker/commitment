@@ -19,8 +19,8 @@ dockermgr update commitment_temp
 ## Install and run container
   
 ```shell
-dockerHome="/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/rootfs"
-mkdir -p "/var/lib/srv/$USER/docker/commitment_temp/rootfs"
+dockerHome="/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/volumes"
+mkdir -p "/var/lib/srv/$USER/docker/commitment_temp/volumes"
 git clone "https://github.com/dockermgr/commitment_temp" "$HOME/.local/share/CasjaysDev/dockermgr/commitment_temp"
 cp -Rfva "$HOME/.local/share/CasjaysDev/dockermgr/commitment_temp/rootfs/." "$dockerHome/"
 docker run -d \
@@ -47,8 +47,8 @@ services:
       - TZ=America/New_York
       - HOSTNAME=commitment_temp
     volumes:
-      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/rootfs/data:/data:z"
-      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/rootfs/config:/config:z"
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/volumes/data:/data:z"
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/volumes/config:/config:z"
     ports:
       - 80:80
     restart: always
