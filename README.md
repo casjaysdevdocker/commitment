@@ -1,6 +1,6 @@
-## 👋 Welcome to commitment_temp 🚀  
+## 👋 Welcome to commitment 🚀  
 
-commitment_temp README  
+commitment README  
   
   
 ## Install my system scripts  
@@ -13,26 +13,26 @@ commitment_temp README
 ## Automatic install/update  
   
 ```shell
-dockermgr update commitment_temp
+dockermgr update commitment
 ```
   
 ## Install and run container
   
 ```shell
-dockerHome="/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/volumes"
-mkdir -p "/var/lib/srv/$USER/docker/commitment_temp/volumes"
-git clone "https://github.com/dockermgr/commitment_temp" "$HOME/.local/share/CasjaysDev/dockermgr/commitment_temp"
-cp -Rfva "$HOME/.local/share/CasjaysDev/dockermgr/commitment_temp/rootfs/." "$dockerHome/"
+dockerHome="/var/lib/srv/$USER/docker/casjaysdevdocker/commitment/commitment/latest/rootfs"
+mkdir -p "/var/lib/srv/$USER/docker/commitment/rootfs"
+git clone "https://github.com/dockermgr/commitment" "$HOME/.local/share/CasjaysDev/dockermgr/commitment"
+cp -Rfva "$HOME/.local/share/CasjaysDev/dockermgr/commitment/rootfs/." "$dockerHome/"
 docker run -d \
 --restart always \
 --privileged \
---name casjaysdevdocker-commitment_temp-latest \
---hostname commitment_temp \
+--name casjaysdevdocker-commitment-latest \
+--hostname commitment \
 -e TZ=${TIMEZONE:-America/New_York} \
 -v "$dockerHome/data:/data:z" \
 -v "$dockerHome/config:/config:z" \
 -p 80:80 \
-casjaysdevdocker/commitment_temp:latest
+casjaysdevdocker/commitment:latest
 ```
   
 ## via docker-compose  
@@ -41,14 +41,14 @@ casjaysdevdocker/commitment_temp:latest
 version: "2"
 services:
   ProjectName:
-    image: casjaysdevdocker/commitment_temp
-    container_name: casjaysdevdocker-commitment_temp
+    image: casjaysdevdocker/commitment
+    container_name: casjaysdevdocker-commitment
     environment:
       - TZ=America/New_York
-      - HOSTNAME=commitment_temp
+      - HOSTNAME=commitment
     volumes:
-      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/volumes/data:/data:z"
-      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment_temp/commitment_temp/latest/volumes/config:/config:z"
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment/commitment/latest/rootfs/data:/data:z"
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/commitment/commitment/latest/rootfs/config:/config:z"
     ports:
       - 80:80
     restart: always
@@ -57,19 +57,19 @@ services:
 ## Get source files  
   
 ```shell
-dockermgr download src casjaysdevdocker/commitment_temp
+dockermgr download src casjaysdevdocker/commitment
 ```
   
 OR
   
 ```shell
-git clone "https://github.com/casjaysdevdocker/commitment_temp" "$HOME/Projects/github/casjaysdevdocker/commitment_temp"
+git clone "https://github.com/casjaysdevdocker/commitment" "$HOME/Projects/github/casjaysdevdocker/commitment"
 ```
   
 ## Build container  
   
 ```shell
-cd "$HOME/Projects/github/casjaysdevdocker/commitment_temp"
+cd "$HOME/Projects/github/casjaysdevdocker/commitment"
 buildx 
 ```
   
